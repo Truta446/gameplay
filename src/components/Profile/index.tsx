@@ -28,5 +28,4 @@ export function Profile() {
       </View>
     </View>
   )
-
 }

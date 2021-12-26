@@ -5,16 +5,21 @@ import {
   Image,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { ButtonIcon } from '../../components/ButtonIcon';
 import IllustrationImg from '../../assets/illustration.png';
 import { styles } from './styles';
 
+type RootStackParamList = {
+  Home: { name: string };
+};
+
 export function SignIn() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   function handleSignIn() {
-    navigation.navigate('Home');
+    navigation.navigate('Home', { name: 'Home' });
   }
 
   return (
@@ -39,7 +44,6 @@ export function SignIn() {
 
         <ButtonIcon
           title="Entrar com Discord"
-          activeOpacity={0.75}
           onPress={handleSignIn}
         />
       </View>

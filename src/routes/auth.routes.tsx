@@ -11,11 +11,15 @@ const { Navigator, Screen } = createStackNavigator();
 export function AuthRoutes() {
   return (
     <Navigator
-      headerMode="none"
       screenOptions={{
         cardStyle: {
-          backgroundColor: 'transparent'
-        }
+          backgroundColor: 'transparent',
+        },
+        headerShown: false,
+        cardOverlay: () => (
+          <Background />
+        ),
+        cardOverlayEnabled: true,
       }}
     >
       <Screen
