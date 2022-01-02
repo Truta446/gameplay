@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { FlatList, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { styles } from './styles';
 import { Profile } from '../../components/Profile';
@@ -9,8 +11,14 @@ import { ListHeader } from '../../components/ListHeader';
 import { Appointment } from '../../components/Appointment';
 import { ListDivider } from '../../components/LIstDivider';
 
+type RootStackParamList = {
+  AppointmentDetails: { name: string };
+  AppointmentCreate: { name: string };
+};
+
 export function Home() {
   const [category, setCategory] = useState('');
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const appointments = [
     {
@@ -55,12 +63,20 @@ export function Home() {
     categoryId === category ? setCategory('') : setCategory(categoryId);
   }
 
+  function hendleAppointmentDetails() {
+    navigation.navigate('AppointmentDetails', { name: 'AppointmentDetails' });
+  }
+
+  function handleAppointmentCreate() {
+    navigation.navigate('AppointmentCreate', { name: 'AppointmentDetails' });
+  }
+
   return (
     <View>
       <View style={styles.header}>
         <Profile />
 
-        <ButtonAdd />
+        <ButtonAdd onPress={handleAppointmentCreate} />
       </View>
 
       <CategorySelect
@@ -78,7 +94,10 @@ export function Home() {
           data={appointments}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
-            <Appointment data={item} />
+            <Appointment
+              data={item}
+              onPress={hendleAppointmentDetails}
+            />
           )}
           ItemSeparatorComponent={() => <ListDivider />}
           style={styles.matches}
