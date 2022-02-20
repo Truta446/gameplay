@@ -1,7 +1,6 @@
 import React from "react";
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { SignIn } from '../screens/SignIn';
 import { Home } from '../screens/Home';
 import { AppointmentDetails } from '../screens/AppointmentDetails';
 import { AppointmentCreate } from "../screens/AppointmentCreate";
@@ -10,7 +9,6 @@ import { Background } from "../components/Background";
 import { theme } from "../global/styles/theme";
 
 const { Navigator, Screen } = createStackNavigator();
-
 
 export function AuthRoutes() {
   return (
@@ -26,10 +24,6 @@ export function AuthRoutes() {
         cardOverlayEnabled: true,
       }}
     >
-      <Screen
-        name="SignIn"
-        component={SignIn}
-      />
       <Screen
         name="Home"
         component={Home}

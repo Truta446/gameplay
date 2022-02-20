@@ -3,27 +3,32 @@ import {
   Text,
   View,
   Image,
+  Alert,
+  ActivityIndicator
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import { ButtonIcon } from '../../components/ButtonIcon';
 import IllustrationImg from '../../assets/illustration.png';
+import { useAuth } from '../../hooks/auth';
 import { styles } from './styles';
-
-type RootStackParamList = {
-  Home: { name: string };
-};
+import { theme } from '../../global/styles/theme';
 
 export function SignIn() {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const { loading, signIn } = useAuth();
 
-  function handleSignIn() {
-    navigation.navigate('Home', { name: 'Home' });
+  async function handleSignIn() {
+    try {
+      console.log('oi');
+      await signIn();
+    } catch (error: any) {
+      Alert.alert(error);
+    }
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={styles.container}
+    >
       <Image
         source={IllustrationImg}
         style={styles.image}
@@ -42,10 +47,14 @@ export function SignIn() {
           favoritos com seus amigos
         </Text>
 
-        <ButtonIcon
-          title="Entrar com Discord"
-          onPress={handleSignIn}
-        />
+        {
+          loading ?
+          <ActivityIndicator color={theme.colors.primary} /> :
+          <ButtonIcon
+            title="Entrar com Discord"
+            onPress={handleSignIn}
+          />
+        }
       </View>
     </View>
   );
